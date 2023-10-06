@@ -6,20 +6,23 @@
   border-style: solid;
   border-radius: 8px;
   max-width: fit-content;
-}
+  display:flex;
+  flex-direction: column;
+  }
 
 .photo-list__image {
   user-select: none;
   width: 300px;
   height: 200px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
-.photo-list__image {
-  border-radius: 8px 8px 0px 0px;
+.photo-list__user-image {
+  border-radius: 50%;
   user-select: none;
-  width: 300px;
-  height: 200px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
 }
 
@@ -28,8 +31,10 @@
   border-radius: 100%;
   vertical-align: middle;
   margin-right: 8px;
-  width: 40px;
   height: 40px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
 }
 
 .photo-list__user-details {
@@ -37,12 +42,16 @@
 }
 
 .photo-list__user-info {
-  margin-top: 5px;
   font-weight: 700;
   font-size: 12px;
-  margin-left: 8px;
+  padding-top: 5px;
+  padding-left: 8px;
 }
 
 .photo-list__user-location {
   color: #838383;
+}
+
+p {
+  margin: 0 !important;
 }
