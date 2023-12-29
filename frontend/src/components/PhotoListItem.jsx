@@ -1,19 +1,32 @@
 import React, { useState } from "react";
-import 'styles/PhotoListItem.scss';
+import "styles/PhotoListItem.scss";
 import PhotoFavButton from "components/PhotoFavButton";
 
-const PhotoListItem = (props) => {
-  const [like, setLike] = useState('no');
-  const notLiked = (like === 'no') ? 'notLiked' : '';
-  
+const PhotoListItem = ({
+  id,
+  setLiked,
+  imageSource,
+  profile,
+  username,
+  location,
+}) => {
+  const [like, setLike] = useState("no");
+
   const switchLike = () => {
-    setLike((prevLike) => (prevLike === "yes") ? "no" : "yes");
+    setLike((prevLike) => {
+      const newLike = prevLike === "yes" ? "no" : "yes";
+
+      // Call the callback function to update liked state in HomeRoute
+      setLiked(id);
+
+      return newLike;
+    });
   };
 
-  const { imageSource, profile, username, location } = props;
-
   return (
-    <section className={`photo-list__item ${notLiked}`}>
+    <section
+      className={`photo-list__item ${like === "no" ? "notLiked" : "no"}`}
+    >
       <PhotoFavButton like={like} switchLike={switchLike} />
       <img className="photo-list__image" src={imageSource} alt="Posted" />
       <div className="photo-list__user-profile">
@@ -21,7 +34,9 @@ const PhotoListItem = (props) => {
         <div className="photo-list__user-details">
           <div className="photo-list__user-info">
             <p>{username}</p>
-            <p className="photo-list__user-location">{location.city}, {location.country}</p>
+            <p className="photo-list__user-location">
+              {location.city}, {location.country}
+            </p>
           </div>
         </div>
       </div>
