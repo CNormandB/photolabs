@@ -11,11 +11,7 @@ const PhotoList = ({ photos, liked, setLiked, setSelectedPhoto }) => {
           setLiked={setLiked}
           setSelectedPhoto={setSelectedPhoto}
           key={photo.id}
-          id={photo.id}
-          imageSource={photo.urls.regular}
-          profile={photo.user.profile}
-          username={photo.user.username}
-          location={photo.location}
+          photo={photo}
         />
       ))}
     </ul>
