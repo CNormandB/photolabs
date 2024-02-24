@@ -7,7 +7,7 @@ const FavBadge = ({ isFavPhotoExist, toggleLikedPhotos }) => {
 
   return (
     <button onClick={toggleLikedPhotos} className='fav-badge' >
-      <FavIcon displayAlert={!!isFavPhotoExist}/>
+      <FavIcon displayAlert={isFavPhotoExist}/>
     </button>
   ) 
 };

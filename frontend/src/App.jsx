@@ -4,10 +4,11 @@ import "./App.scss";
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
+  const [liked, setLiked] = useState([]);
   return (
     <div className="App">
       <React.StrictMode>
-        <HomeRoute />
+        <HomeRoute liked={liked} setLiked={setLiked}/>
       </React.StrictMode>
     </div>
   );

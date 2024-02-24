@@ -1,12 +1,13 @@
-import React from 'react';
-import PhotoListItem from './PhotoListItem';
-import '../styles/PhotoList.scss';
+import React from "react";
+import PhotoListItem from "./PhotoListItem";
+import "../styles/PhotoList.scss";
 
-const PhotoList = ({ photos, setLiked }) => {
+const PhotoList = ({ photos, liked, setLiked }) => {
   return (
     <ul className="photo-list">
       {photos.map((photo) => (
         <PhotoListItem
+          liked={liked}
           setLiked={setLiked}
           key={photo.id}
           id={photo.id}

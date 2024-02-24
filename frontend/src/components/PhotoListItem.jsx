@@ -4,18 +4,19 @@ import PhotoFavButton from "components/PhotoFavButton";
 
 const PhotoListItem = ({
   id,
+  liked,
   setLiked,
   imageSource,
   profile,
   username,
   location,
 }) => {
-  const [like, setLike] = useState("no");
+  const [like, setLike] = useState(liked.includes(id) ? "yes" : "no");
 
   const switchLike = () => {
     setLike((prevLike) => {
       const newLike = prevLike === "yes" ? "no" : "yes";
-
+  
       // Call the callback function to update liked state in HomeRoute
       setLiked(id);
 

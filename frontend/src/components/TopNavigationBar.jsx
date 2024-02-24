@@ -4,6 +4,7 @@ import FavBadge from './FavBadge';
 import '../styles/TopNavigationBar.scss';
 
 const TopNavigation = ({ onSelectTopic, topic, likedPhotos, toggleLikedPhotos }) => {
+  console.log(likedPhotos)
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
