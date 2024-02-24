@@ -12,7 +12,7 @@ const App = () => {
     <div className="App">
       <React.StrictMode>
         <HomeRoute liked={liked} setLiked={setLiked} setSelectedPhoto={setSelectedPhoto}/>
-        <PhotoDetailsModal selectedPhoto={selectedPhoto}/>
+        <PhotoDetailsModal selectedPhoto={selectedPhoto} setSelectedPhoto={setSelectedPhoto}/>
       </React.StrictMode>
     </div>
   );
