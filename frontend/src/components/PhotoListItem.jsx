@@ -6,12 +6,17 @@ const PhotoListItem = ({
   id,
   liked,
   setLiked,
+  setSelectedPhoto,
   imageSource,
   profile,
   username,
   location,
 }) => {
   const [like, setLike] = useState(liked.includes(id) ? "yes" : "no");
+
+  const setSelfAsSelected = () => {
+    setSelectedPhoto(id)
+  }
 
   const switchLike = () => {
     setLike((prevLike) => {
@@ -26,7 +31,7 @@ const PhotoListItem = ({
 
   return (
     <section
-      className={`photo-list__item ${like === "no" ? "notLiked" : "no"}`}
+      className={`photo-list__item ${like === "no" ? "notLiked" : "no"}`} onClick={setSelfAsSelected}
     >
       <PhotoFavButton like={like} switchLike={switchLike} />
       <img className="photo-list__image" src={imageSource} alt="Posted" />
