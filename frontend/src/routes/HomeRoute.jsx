@@ -5,7 +5,7 @@ import topics from "mocks/topics";
 import photos from "mocks/photos";
 import "../styles/HomeRoute.scss";
 
-const HomeRoute = ({liked, setLiked, setSelectedPhoto}) => {
+const HomeRoute = ({handleLikedChange, liked, setLiked, setSelectedPhoto}) => {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [filteredPhotos, setFilteredPhotos] = useState(photos);
   const [displayLikedPhotos, setDisplayLikedPhotos] = useState(false)
@@ -25,18 +25,6 @@ const HomeRoute = ({liked, setLiked, setSelectedPhoto}) => {
     setFilteredPhotos(filteredPhotos);
 
   };
-
-  const handleLikedChange = function(photoId) {
-    setLiked((prevLiked) => {
-      console.log(prevLiked)
-      console.log(photoId)
-      if (prevLiked.includes(photoId)) {
-        return prevLiked.filter((item) => item !== photoId);
-      } else {
-        return [...prevLiked, photoId];
-      }
-    });
-  }
 
   const toggleLikedPhotos = function(){
     console.log(displayLikedPhotos)

@@ -8,11 +8,23 @@ const App = () => {
   const [liked, setLiked] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(undefined)
 
+  const handleLikedChange = function(photoId) {
+    setLiked((prevLiked) => {
+      console.log(prevLiked)
+      console.log(photoId)
+      if (prevLiked.includes(photoId)) {
+        return prevLiked.filter((item) => item !== photoId);
+      } else {
+        return [...prevLiked, photoId];
+      }
+    });
+  }
+
   return (
     <div className="App">
       <React.StrictMode>
-        <HomeRoute liked={liked} setLiked={setLiked} setSelectedPhoto={setSelectedPhoto}/>
-        <PhotoDetailsModal selectedPhoto={selectedPhoto} setSelectedPhoto={setSelectedPhoto}/>
+        <HomeRoute handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} setSelectedPhoto={setSelectedPhoto}/>
+        <PhotoDetailsModal handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} selectedPhoto={selectedPhoto} setSelectedPhoto={setSelectedPhoto}/>
       </React.StrictMode>
     </div>
   );
