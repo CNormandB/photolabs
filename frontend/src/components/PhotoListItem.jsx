@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "styles/PhotoListItem.scss";
 import PhotoFavButton from "components/PhotoFavButton";
 
@@ -8,7 +8,16 @@ const PhotoListItem = ({
   setSelectedPhoto,
   photo
 }) => {
-  const [like, setLike] = useState(liked.includes(photo.id) ? "yes" : "no");
+  const [like, setLike] = useState("no");
+
+  useEffect(() => {
+    // Check if photo.id is in liked array
+    if (liked.includes(photo.id)) {
+      setLike("yes");
+    } else {
+      setLike("no");
+    }
+  }, [liked, photo.id]);
 
   const setSelfAsSelected = (e) => {
     console.log(e)

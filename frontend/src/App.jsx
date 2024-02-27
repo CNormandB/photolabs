@@ -10,13 +10,15 @@ const App = () => {
 
   const handleLikedChange = function(photoId) {
     setLiked((prevLiked) => {
-      console.log(prevLiked)
-      console.log(photoId)
-      if (prevLiked.includes(photoId)) {
-        return prevLiked.filter((item) => item !== photoId);
+      const likedSet = new Set(prevLiked)
+      
+      if (likedSet.has(photoId)) {
+        likedSet.delete(photoId);
       } else {
-        return [...prevLiked, photoId];
+        likedSet.add(photoId);
       }
+
+      return Array.from(likedSet);
     });
   }
 
@@ -24,7 +26,7 @@ const App = () => {
     <div className="App">
       <React.StrictMode>
         <HomeRoute handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} setSelectedPhoto={setSelectedPhoto}/>
-        <PhotoDetailsModal handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} selectedPhoto={selectedPhoto} setSelectedPhoto={setSelectedPhoto}/>
+        { selectedPhoto && <PhotoDetailsModal handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} selectedPhoto={selectedPhoto} setSelectedPhoto={setSelectedPhoto}/> }
       </React.StrictMode>
     </div>
   );
