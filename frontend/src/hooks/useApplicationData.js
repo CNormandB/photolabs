@@ -1,13 +1,13 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import photos from "mocks/photos";
 import topics from "mocks/topics";
 
 const INITIAL_STATE = {
   selectedPhoto: undefined,
   favPhotoIds: [],
-  photos: photos,
-  filteredPhotos: photos,
-  topics: topics,
+  photos: [],
+  filteredPhotos: [],
+  topics: [],
   topic: undefined,
 };
 
@@ -17,6 +17,7 @@ const ACTIONS = {
   SWITCH_TOPIC: "switch_topic",
   SELECT_PHOTO: "select_photo",
   CLOSE_MODAL: "close_modal",
+  SET_PHOTO_DATA: "set_photo_data"
 };
 
 const reducer = (state, action) => {
@@ -49,6 +50,13 @@ const reducer = (state, action) => {
         topic: action.payload,
         filteredPhotos: state.photos.filter((photo) => photo.topics.includes(action.payload))
       };
+
+    case ACTIONS.SET_PHOTO_DATA:
+      return {
+        ...state, 
+        photos: action.payload,
+        filteredPhotos: action.payload
+      }
     default:
       throw new Error(`Could not perform unknown action: ${action.type}, payload: ${action.payload}`)
   }
@@ -77,6 +85,10 @@ const useApplicationData = () => {
     dispatch({type: ACTIONS.CLOSE_MODAL})
   };
 
+  const setPhotoData = (photos) => {
+    dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: photos})
+  }
+
   return {
     state,
     updateToFavPhotoIds,
@@ -84,6 +96,7 @@ const useApplicationData = () => {
     onLoadTopic,
     showLiked,
     onClosePhotoDetailsModal,
+    setPhotoData
   };
 };
 
