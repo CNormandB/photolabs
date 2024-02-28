@@ -25,14 +25,7 @@ const PhotoListItem = ({
   }
 
   const switchLike = () => {
-    setLike((prevLike) => {
-      const newLike = prevLike === "yes" ? "no" : "yes";
-  
-      // Call the callback function to update liked state in HomeRoute
-      dispatch({type: ACTIONS.SWITCH_LIKE, payload: photo.id});
-
-      return newLike;
-    });
+    dispatch({type: ACTIONS.SWITCH_LIKE, payload: photo.id});
   };
 
   return (
