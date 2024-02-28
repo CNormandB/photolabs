@@ -20,7 +20,6 @@ const PhotoListItem = ({
   }, [state.favPhotoIds]);
 
   const setSelfAsSelected = (e) => {
-    console.log(photo);
     dispatch({type: ACTIONS.SELECT_PHOTO, payload: state.photos.filter(statePhoto=>statePhoto.id === photo.id)[0]})
   }
 
