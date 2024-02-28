@@ -50,8 +50,7 @@ const reducer = (state, action) => {
         filteredPhotos: state.photos.filter((photo) => photo.topics.includes(action.payload))
       };
     default:
-      console.error(`Could not perform unknown action: ${action.type}, payload: ${action.payload}`)
-      return state;
+      throw new Error(`Could not perform unknown action: ${action.type}, payload: ${action.payload}`)
   }
 };
 
