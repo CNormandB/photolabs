@@ -35,7 +35,7 @@ const PhotoListItem = ({
   };
 
   return (
-    <section
+    <li
       className={`photo-list__item ${like === "no" ? "notLiked" : "no"}`} onClick={setSelfAsSelected}
     >
       <PhotoFavButton switchLike={switchLike} like={like} />
@@ -51,7 +51,7 @@ const PhotoListItem = ({
           </div>
         </div>
       </div>
-    </section>
+    </li>
   );
 };
 
