@@ -7,14 +7,7 @@ import { ACTIONS } from "hooks/useApplicationData";
 
 const PhotoDetailsModal = ({ state, dispatch }) => {
   const switchLike = () => {
-    const newLike = state.favPhotoIds.includes(state.selectedPhoto.id)
-      ? "no"
-      : "yes";
-
-    // Call the callback function to update liked state in HomeRoute
-    dispatch({ type: ACTIONS.SWITCH_LIKE, payload: state.selectedPhoto.id });
-
-    return newLike;
+    dispatch({ type: ACTIONS.SWITCH_LIKE, payload: state.selectedPhoto.id })
   };
 
   const closeModal = () => {
