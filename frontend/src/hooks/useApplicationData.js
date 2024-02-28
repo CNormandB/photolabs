@@ -7,21 +7,14 @@ const useApplicationData = () => {
   const [state, setState] = useState({
     // Initialize with your initial state
     // Example:
-    photos: [],
-    filteredPhotos: [],
+    photos: photos,
+    filteredPhotos: photos,
     favPhotoIds: [],
     selectedPhoto: undefined,
-    topics: [],
+    topics: topics,
     topic: ''
     // Add other state properties as needed
   });
-
-
-  useEffect(() => {
-    state.photos = photos
-    state.filteredPhotos = photos
-    state.topics = topics
-  })
 
 
   const showLiked = () => {
