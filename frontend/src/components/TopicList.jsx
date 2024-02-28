@@ -3,7 +3,7 @@ import TopicListItem from './TopicListItem';
 import topics from 'mocks/topics';
 import '../styles/TopicList.scss';
 
-const TopicList = ({ onSelectTopic, selectedTopic }) => {
+const TopicList = ({ onSelectTopic }) => {
   return (
     <div className="topic-list__item">
       {topics.map((topic) => (

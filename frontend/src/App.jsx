@@ -2,31 +2,24 @@ import React, { useState } from "react";
 import HomeRoute from "routes/HomeRoute";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import "./App.scss";
+import useApplicationData from "hooks/useApplicationData";
 
 // Note: Rendering a single component to build components in isolation
-const App = () => {
-  const [liked, setLiked] = useState([]);
-  const [selectedPhoto, setSelectedPhoto] = useState(undefined)
-
-  const handleLikedChange = function(photoId) {
-    setLiked((prevLiked) => {
-      const likedSet = new Set(prevLiked)
-      
-      if (likedSet.has(photoId)) {
-        likedSet.delete(photoId);
-      } else {
-        likedSet.add(photoId);
-      }
-
-      return Array.from(likedSet);
-    });
-  }
+  const App = () => {
+    const {
+      state,
+      setPhotoSelected,
+      updateToFavPhotoIds,
+      onLoadTopic,
+      onClosePhotoDetailsModal,
+      showLiked
+    } = useApplicationData();
 
   return (
     <div className="App">
       <React.StrictMode>
-        <HomeRoute handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} setSelectedPhoto={setSelectedPhoto}/>
-        { selectedPhoto && <PhotoDetailsModal handleLikedChange={handleLikedChange} liked={liked} setLiked={setLiked} selectedPhoto={selectedPhoto} setSelectedPhoto={setSelectedPhoto}/> }
+        <HomeRoute showLiked={showLiked} handleLikedChange={updateToFavPhotoIds} state={state} setPhotoSelected={setPhotoSelected} onSelectTopic={onLoadTopic}/>
+        { state.selectedPhoto && <PhotoDetailsModal handleLikedChange={updateToFavPhotoIds} state={state} setPhotoSelected={setPhotoSelected} onClosePhotoDetailsModal={onClosePhotoDetailsModal}/> }
       </React.StrictMode>
     </div>
   );

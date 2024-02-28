@@ -4,47 +4,44 @@ import closeSymbol from "../assets/closeSymbol.svg";
 import PhotoList from "components/PhotoList";
 import PhotoFavButton from "components/PhotoFavButton";
 
-const PhotoDetailsModal = ({handleLikedChange, liked, setLiked, selectedPhoto, setSelectedPhoto }) => {
+const PhotoDetailsModal = ({state, setPhotoSelected, handleLikedChange, onClosePhotoDetailsModal}) => {
   const unselect = () => {
     setSelectedPhoto(undefined);
   };
+
   const switchLike = () => {
-    // Check if selectedPhoto is already liked
-    const isLiked = liked.includes(selectedPhoto.id);
+      const newLike = state.favPhotoIds.includes(state.selectedPhoto.id) ? "no" : "yes"
+  
+      // Call the callback function to update liked state in HomeRoute
+      handleLikedChange(state.selectedPhoto.id);
+
+      return newLike;
     
-    // Toggle like state based on whether selectedPhoto is already liked
-    if (isLiked) {
-      // If already liked, remove it
-      setLiked(prevLiked => prevLiked.filter(item => item !== selectedPhoto.id));
-    } else {
-      // If not liked, add it
-      setLiked(prevLiked => [...prevLiked, selectedPhoto.id]);
-    }
   };
-  console.log(selectedPhoto);
+
   return (
     <div className="photo-details-modal">
-      <button className="photo-details-modal__close-button" onClick={unselect}>
+      <button className="photo-details-modal__close-button" onClick={onClosePhotoDetailsModal}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
-      <PhotoFavButton switchLike={switchLike} like={liked.includes(selectedPhoto.id) ? "yes" : "no"} />
-      <img className="photo-details-modal__image" src={selectedPhoto.urls.regular}/>
+      <PhotoFavButton switchLike={switchLike} like={state.favPhotoIds.includes(state.selectedPhoto.id) ? "yes" : "no"} />
+      <img className="photo-details-modal__image" src={state.selectedPhoto.urls.regular}/>
       <div className="photo-details-modal__photographer-details">
         <img
           className="photo-details-modal__photographer-profile"
-          src={selectedPhoto.user.profile}
+          src={state.selectedPhoto.user.profile}
           alt="Profile"
         />
           <div className="photo-details-modal__photographer-info">
-            <p>{selectedPhoto.user.name}
+            <p>{state.selectedPhoto.user.name}
             </p>
             <p className="photo-details-modal__photographer-location">
-              {selectedPhoto.location.city}, {selectedPhoto.location.country}
+              {state.selectedPhoto.location.city}, {state.selectedPhoto.location.country}
             </p>
         </div>
       </div>
       <p className="photo-details-modal__header">Similar Photos</p>
-      <PhotoList className='photo-details-modal__images' liked={liked} setLiked={handleLikedChange} photos={Object.values(selectedPhoto.similar_photos)}/>
+      <PhotoList className='photo-details-modal__images' state={state} setPhotoSelected={setPhotoSelected} setLiked={handleLikedChange} photos={Object.values(state.selectedPhoto.similar_photos)}/>
       </div>
   );
 };

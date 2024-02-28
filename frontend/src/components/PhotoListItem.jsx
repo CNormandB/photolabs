@@ -3,7 +3,7 @@ import "styles/PhotoListItem.scss";
 import PhotoFavButton from "components/PhotoFavButton";
 
 const PhotoListItem = ({
-  liked,
+  state,
   setLiked,
   setSelectedPhoto,
   photo
@@ -12,15 +12,14 @@ const PhotoListItem = ({
 
   useEffect(() => {
     // Check if photo.id is in liked array
-    if (liked.includes(photo.id)) {
+    if (state.favPhotoIds.includes(photo.id)) {
       setLike("yes");
     } else {
       setLike("no");
     }
-  }, [liked, photo.id]);
+  }, [state.favPhotoIds, photo.id]);
 
   const setSelfAsSelected = (e) => {
-    console.log(e)
     setSelectedPhoto(photo)
   }
 
