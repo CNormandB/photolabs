@@ -6,11 +6,7 @@ import {ACTIONS} from "../hooks/useApplicationData"
 
 
 const TopicList = ({ state, dispatch }) => {
-  if(!state.topics){
-    return
-  }
-
-  return (
+  return (state.topics && (
     <div className="topic-list__item">
       {state.topics.map((topic) => (
         <button className="topic-list__button" key={topic.id}>
@@ -18,7 +14,7 @@ const TopicList = ({ state, dispatch }) => {
         </button>
       ))}
     </div>
-  );
+  ));
 };
 
 export default TopicList;

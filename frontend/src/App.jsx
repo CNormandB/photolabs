@@ -14,12 +14,32 @@ const App = () => {
 
   useEffect(() => {
     fetch("/api/photos", { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data}));
-      fetch("/api/topics", {method: "GET"})
-      .then((res) => res.json())
-      .then((data) => dispatch({type: ACTIONS.SET_TOPICS_DATA, payload: data})
-      )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch photos');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error('Error fetching photos:', error.message);
+      });
+  
+    fetch("/api/topics", { method: "GET" })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch topics');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_TOPICS_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error('Error fetching topics:', error.message);
+      });
   }, []);
 
   return (

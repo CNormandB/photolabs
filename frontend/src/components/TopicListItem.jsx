@@ -2,22 +2,21 @@ import React from "react";
 import "../styles/TopicListItem.scss";
 import { ACTIONS } from "hooks/useApplicationData";
 
-/*
-const sampleDataForTopicListItem = {
-  id: "1",
-  slug: "topic-1",
-  label: "Nature",
-};
-*/
 
 const TopicListItem = ({ state, dispatch, topic }) => {
   const getTopicImages = () => {
     fetch(`/api/topics/photos/${topic.id}`)
-      .then((res) => res.json())
-      .then((data) =>{
-        console.log({ type: ACTIONS.SWITCH_TOPIC, payload: { data, topic } })
-        dispatch({ type: ACTIONS.SWITCH_TOPIC, payload: { data, topic } })
-      
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({ type: ACTIONS.SWITCH_TOPIC, payload: { data, topic } });
+      })
+      .catch((error) => {
+        console.error('Error fetching topic images:', error);
       });
   };
 

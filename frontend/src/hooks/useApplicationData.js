@@ -1,6 +1,4 @@
-import { useState, useReducer, useEffect } from "react";
-import photos from "mocks/photos";
-import topics from "mocks/topics";
+import { useState, useReducer } from "react";
 
 const INITIAL_STATE = {
   selectedPhoto: undefined,
