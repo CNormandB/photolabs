@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 
 const INITIAL_STATE = {
   selectedPhoto: undefined,
@@ -17,6 +17,7 @@ export const ACTIONS = {
   CLOSE_MODAL: "close_modal",
   SET_PHOTO_DATA: "set_photo_data",
   SET_TOPICS_DATA: "set_topics_data",
+  SET_FILTERED_PHOTOS: "set_filtered_photos",
 };
 
 const reducer = (state, action) => {
@@ -46,11 +47,10 @@ const reducer = (state, action) => {
         ),
       };
     case ACTIONS.SWITCH_TOPIC:
-        return {
-          ...state,
-          topic: action.payload.topic,
-          filteredPhotos: action.payload.data
-        }
+      return {
+        ...state,
+        topic: action.payload,
+      };
     case ACTIONS.SET_PHOTO_DATA:
       return {
         ...state,
@@ -62,6 +62,11 @@ const reducer = (state, action) => {
         ...state,
         topics: action.payload,
       };
+    case ACTIONS.SET_FILTERED_PHOTOS:
+      return {
+        ...state,
+        filteredPhotos: action.payload
+      }
     default:
       throw new Error(
         `Could not perform unknown action: ${action.type}, payload: ${action.payload}`
@@ -72,6 +77,45 @@ const reducer = (state, action) => {
 const useApplicationData = () => {
   // Define your state variables
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+  useEffect(() => {
+    fetch("/api/photos", { method: "GET" })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch photos");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error("Error fetching photos:", error.message);
+      });
+
+    fetch("/api/topics", { method: "GET" })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch topics");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_TOPICS_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error("Error fetching topics:", error.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    if(!state.topic) return
+    fetch(`/api/topics/photos/${state.topic.id}`)
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: data })
+      );
+  }, [state.topic]);
 
   const showLiked = () => dispatch({ type: ACTIONS.SHOW_LIKED });
 
