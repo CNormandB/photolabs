@@ -11,7 +11,7 @@ const FavBadge = ({ isFavPhotoExist, dispatch }) => {
 
   return (
     <button onClick={showLiked} className='fav-badge' >
-      <FavIcon displayAlert={isFavPhotoExist} selected={isFavPhotoExist}/>
+      <FavIcon displayAlert={isFavPhotoExist} selected={true}/>
     </button>
   ) 
 };
