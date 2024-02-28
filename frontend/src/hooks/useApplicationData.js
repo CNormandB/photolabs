@@ -22,6 +22,7 @@ export const ACTIONS = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    // toggle a photo's liked status
     case ACTIONS.SWITCH_LIKE:
       return {
         ...state,
@@ -29,16 +30,22 @@ const reducer = (state, action) => {
           ? state.favPhotoIds.filter((id) => id !== action.payload)
           : [...state.favPhotoIds, action.payload],
       };
+
+    // Sets a photo as selected
     case ACTIONS.SELECT_PHOTO:
       return {
         ...state,
         selectedPhoto: action.payload,
       };
+
+    // Removes the selected photo, causing modal to close
     case ACTIONS.CLOSE_MODAL:
       return {
         ...state,
         selectedPhoto: undefined,
       };
+
+    // Sets filteredPhotos to only photos which have been liked by the user
     case ACTIONS.SHOW_LIKED:
       return {
         ...state,
@@ -46,27 +53,37 @@ const reducer = (state, action) => {
           state.favPhotoIds.includes(p.id)
         ),
       };
+
+    // Sets the value of topic
     case ACTIONS.SWITCH_TOPIC:
       return {
         ...state,
         topic: action.payload,
       };
+    
+    // Sets the values in the photos array
     case ACTIONS.SET_PHOTO_DATA:
       return {
         ...state,
         photos: action.payload,
         filteredPhotos: action.payload,
       };
+
+    // Sets the values in the topics array
     case ACTIONS.SET_TOPICS_DATA:
       return {
         ...state,
         topics: action.payload,
       };
+
+    // Sets the photos in the filtered photos array
     case ACTIONS.SET_FILTERED_PHOTOS:
       return {
         ...state,
         filteredPhotos: action.payload
       }
+      
+    // Handle unknown actions
     default:
       throw new Error(
         `Could not perform unknown action: ${action.type}, payload: ${action.payload}`
@@ -78,6 +95,7 @@ const useApplicationData = () => {
   // Define your state variables
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
+  // Set the initial values for photos and topics
   useEffect(() => {
     fetch("/api/photos", { method: "GET" })
       .then((res) => {
@@ -108,16 +126,26 @@ const useApplicationData = () => {
       });
   }, []);
 
+  // When topic is changed, trigger a fetch for filtered photos and update components
   useEffect(() => {
+    // No topic set, don't do anything
     if(!state.topic) return
+    // Topic set, make API request
     fetch(`/api/topics/photos/${state.topic.id}`)
-      .then((res) => res.json())
-      .then((data) =>
-        dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: data })
-      );
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error('Failed to fetch topic photos');
+      }
+      return res.json();
+    })
+    .then((data) =>
+      // Set filtered photos to the result of our API call
+      dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: data })
+    )
+    .catch((error) => {
+      console.error('Error fetching topic photos:', error);
+    });
   }, [state.topic]);
-
-  const showLiked = () => dispatch({ type: ACTIONS.SHOW_LIKED });
 
   return {
     state,
