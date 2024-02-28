@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "styles/PhotoListItem.scss";
 import PhotoFavButton from "components/PhotoFavButton";
+import { ACTIONS } from "hooks/useApplicationData";
 
 const PhotoListItem = ({
   state,
-  setLiked,
-  setSelectedPhoto,
+  dispatch,
   photo
 }) => {
   const [like, setLike] = useState("no");
@@ -17,10 +17,10 @@ const PhotoListItem = ({
     } else {
       setLike("no");
     }
-  }, [state.favPhotoIds, photo.id]);
+  }, [state.favPhotoIds]);
 
   const setSelfAsSelected = (e) => {
-    setSelectedPhoto(photo)
+    dispatch({type: ACTIONS.SELECT_PHOTO, payload: photo})
   }
 
   const switchLike = () => {
@@ -28,7 +28,7 @@ const PhotoListItem = ({
       const newLike = prevLike === "yes" ? "no" : "yes";
   
       // Call the callback function to update liked state in HomeRoute
-      setLiked(photo.id);
+      dispatch({type: ACTIONS.SWITCH_LIKE, payload: photo.id});
 
       return newLike;
     });
@@ -38,7 +38,7 @@ const PhotoListItem = ({
     <section
       className={`photo-list__item ${like === "no" ? "notLiked" : "no"}`} onClick={setSelfAsSelected}
     >
-      <PhotoFavButton setSelectedPhoto={setSelectedPhoto} like={like} switchLike={switchLike} />
+      <PhotoFavButton switchLike={switchLike} like={like} />
       <img className="photo-list__image" src={photo.urls.regular} alt="Posted" />
       <div className="photo-list__user-profile">
         <img className="photo-list__user-image" src={photo.user.profile} alt="Profile" />

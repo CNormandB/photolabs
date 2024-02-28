@@ -3,17 +3,13 @@ import HomeRoute from "routes/HomeRoute";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import "./App.scss";
 import useApplicationData from "hooks/useApplicationData";
+import { ACTIONS } from "hooks/useApplicationData";
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
   const {
     state,
-    setPhotoSelected,
-    updateToFavPhotoIds,
-    onLoadTopic,
-    onClosePhotoDetailsModal,
-    showLiked,
-    setPhotoData
+    dispatch,
   } = useApplicationData();
 
   useEffect(() => {
@@ -21,7 +17,7 @@ const App = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setPhotoData(data)
+        dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data})
       });
   }, []);
 
@@ -29,18 +25,13 @@ const App = () => {
     <div className="App">
       <React.StrictMode>
         <HomeRoute
-          showLiked={showLiked}
-          handleLikedChange={updateToFavPhotoIds}
           state={state}
-          setPhotoSelected={setPhotoSelected}
-          onSelectTopic={onLoadTopic}
+          dispatch={dispatch}
         />
         {state.selectedPhoto && (
           <PhotoDetailsModal
-            handleLikedChange={updateToFavPhotoIds}
             state={state}
-            setPhotoSelected={setPhotoSelected}
-            onClosePhotoDetailsModal={onClosePhotoDetailsModal}
+            dispatch={dispatch}
           />
         )}
       </React.StrictMode>

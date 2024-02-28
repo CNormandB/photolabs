@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   topic: undefined,
 };
 
-const ACTIONS = {
+export const ACTIONS = {
   SWITCH_LIKE: "switch_like",
   SHOW_LIKED: "show_liked",
   SWITCH_TOPIC: "switch_topic",
@@ -91,12 +91,7 @@ const useApplicationData = () => {
 
   return {
     state,
-    updateToFavPhotoIds,
-    setPhotoSelected,
-    onLoadTopic,
-    showLiked,
-    onClosePhotoDetailsModal,
-    setPhotoData
+    dispatch,
   };
 };
 

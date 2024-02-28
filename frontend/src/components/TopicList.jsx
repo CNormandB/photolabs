@@ -2,13 +2,15 @@ import React from 'react';
 import TopicListItem from './TopicListItem';
 import topics from 'mocks/topics';
 import '../styles/TopicList.scss';
+import {ACTIONS} from "../hooks/useApplicationData"
 
-const TopicList = ({ onSelectTopic }) => {
+
+const TopicList = ({ state, dispatch }) => {
   return (
     <div className="topic-list__item">
-      {topics.map((topic) => (
+      {state.topics.map((topic) => (
         <button className="topic-list__button" key={topic.id} onClick={() => onSelectTopic(topic.title)}>
-          <TopicListItem onSelectTopic={onSelectTopic} topic={topic.title} />
+          <TopicListItem state={state} dispatch={dispatch} topic={topic.title} />
         </button>
       ))}
     </div>

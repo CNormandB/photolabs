@@ -3,12 +3,12 @@ import TopicList from './TopicList';
 import FavBadge from './FavBadge';
 import '../styles/TopNavigationBar.scss';
 
-const TopNavigation = ({ onSelectTopic, state, toggleLikedPhotos }) => {
+const TopNavigation = ({state, dispatch }) => {
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
-      <TopicList onSelectTopic={onSelectTopic} topic={state.topic}/>
-      <FavBadge isFavPhotoExist={(state.favPhotoIds.length !== 0)} toggleLikedPhotos={toggleLikedPhotos}/>
+      <TopicList state={state} dispatch={dispatch} />
+      <FavBadge isFavPhotoExist={(state.favPhotoIds.length !== 0)} dispatch={dispatch}/>
     </div>
   );
 };

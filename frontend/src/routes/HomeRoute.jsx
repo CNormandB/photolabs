@@ -5,12 +5,12 @@ import topics from "mocks/topics";
 import photos from "mocks/photos";
 import "../styles/HomeRoute.scss";
 
-const HomeRoute = ({handleLikedChange, state, setPhotoSelected, onSelectTopic, showLiked}) => {
-
+const HomeRoute = ({state, dispatch}) => {
+  console.log(state)
   return (
     <div>
-      <TopNavigation toggleLikedPhotos={showLiked} onSelectTopic={onSelectTopic} state={state} />
-      <PhotoList state={state} setLiked={handleLikedChange} setPhotoSelected={setPhotoSelected}/>
+      <TopNavigation state={state} dispatch={dispatch}/>
+      <PhotoList state={state} dispatch={dispatch} photos={state.filteredPhotos}/>
     </div>
   );
 };

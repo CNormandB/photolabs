@@ -2,16 +2,17 @@ import React, {useEffect} from "react";
 import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
-const PhotoList = ({ state, setLiked, setPhotoSelected }) => {
-  let photos = state.filteredPhotos
-
+const PhotoList = ({ state, dispatch, photos }) => {
+  if(!photos){
+    return
+  }
+    
   return (
     <ul className="photo-list">
       {photos.map((photo) => (
         <PhotoListItem
           state={state}
-          setLiked={setLiked}
-          setSelectedPhoto={setPhotoSelected}
+          dispatch={dispatch}
           key={photo.id}
           photo={photo}
         />

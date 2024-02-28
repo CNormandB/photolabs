@@ -3,25 +3,27 @@ import "../styles/PhotoDetailsModal.scss";
 import closeSymbol from "../assets/closeSymbol.svg";
 import PhotoList from "components/PhotoList";
 import PhotoFavButton from "components/PhotoFavButton";
+import { ACTIONS } from "hooks/useApplicationData";
 
-const PhotoDetailsModal = ({state, setPhotoSelected, handleLikedChange, onClosePhotoDetailsModal}) => {
-  const unselect = () => {
-    setSelectedPhoto(undefined);
-  };
+const PhotoDetailsModal = ({state, dispatch}) => {
 
   const switchLike = () => {
       const newLike = state.favPhotoIds.includes(state.selectedPhoto.id) ? "no" : "yes"
   
       // Call the callback function to update liked state in HomeRoute
-      handleLikedChange(state.selectedPhoto.id);
+      dispatch({type: ACTIONS.SWITCH_LIKE, payload: state.selectedPhoto.id});
 
       return newLike;
     
   };
 
+  const closeModal = () => {
+    dispatch({type: ACTIONS.CLOSE_MODAL});
+  }
+
   return (
     <div className="photo-details-modal">
-      <button className="photo-details-modal__close-button" onClick={onClosePhotoDetailsModal}>
+      <button className="photo-details-modal__close-button" onClick={closeModal}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
       <PhotoFavButton switchLike={switchLike} like={state.favPhotoIds.includes(state.selectedPhoto.id) ? "yes" : "no"} />
@@ -41,7 +43,7 @@ const PhotoDetailsModal = ({state, setPhotoSelected, handleLikedChange, onCloseP
         </div>
       </div>
       <p className="photo-details-modal__header">Similar Photos</p>
-      <PhotoList className='photo-details-modal__images' state={state} setPhotoSelected={setPhotoSelected} setLiked={handleLikedChange} photos={Object.values(state.selectedPhoto.similar_photos)}/>
+      <PhotoList className='photo-details-modal__images' state={state} dispatch={dispatch} photos={Object.values(state.selectedPhoto.similar_photos)}/>
       </div>
   );
 };
