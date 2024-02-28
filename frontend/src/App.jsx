@@ -15,10 +15,11 @@ const App = () => {
   useEffect(() => {
     fetch("/api/photos", { method: "GET" })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data})
-      });
+      .then((data) => dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data}));
+      fetch("/api/topics", {method: "GET"})
+      .then((res) => res.json())
+      .then((data) => dispatch({type: ACTIONS.SET_TOPICS_DATA, payload: data})
+      )
   }, []);
 
   return (

@@ -6,7 +6,6 @@ import photos from "mocks/photos";
 import "../styles/HomeRoute.scss";
 
 const HomeRoute = ({state, dispatch}) => {
-  console.log(state)
   return (
     <div>
       <TopNavigation state={state} dispatch={dispatch}/>
