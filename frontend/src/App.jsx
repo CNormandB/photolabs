@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import HomeRoute from "routes/HomeRoute";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import "./App.scss";
 import useApplicationData from "hooks/useApplicationData";
-import { ACTIONS } from "hooks/useApplicationData";
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
@@ -19,7 +18,9 @@ const App = () => {
           state={state}
           dispatch={dispatch}
         />
-        {state.selectedPhoto && (
+        {
+        // Display the modal only if a photo has been selected
+        state.selectedPhoto && (
           <PhotoDetailsModal
             state={state}
             dispatch={dispatch}
